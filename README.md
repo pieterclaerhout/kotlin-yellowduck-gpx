@@ -22,3 +22,7 @@ dependencies {
 	implementation("com.github.pieterclaerhout:kotlin-yellowduck-gpx:1.0.2")
 }
 ```
+
+JitPack URL:
+
+https://jitpack.io/#pieterclaerhout/kotlin-yellowduck-gpx/v1.0.2
