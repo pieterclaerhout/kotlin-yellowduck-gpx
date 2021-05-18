@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

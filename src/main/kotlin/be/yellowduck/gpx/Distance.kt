@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 data class Distance(
     private val lengthInMeters: Double = 0.0

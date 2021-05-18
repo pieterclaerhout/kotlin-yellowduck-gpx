@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx;
+package be.yellowduck.gpx;
 
 data class Segment(
     val points: MutableList<TrackPoint> = mutableListOf()

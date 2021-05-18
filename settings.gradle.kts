@@ -8,4 +8,3 @@
  */
 
 rootProject.name = "gpx"
-//include("lib")

@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 class Polyline {
 
@@ -45,7 +45,7 @@ class Polyline {
             return chunks
         }
 
-        fun decodeToGPX(polyline: String, name: String=""): GPXFile{
+        fun decodeToGPX(polyline: String, name: String=""): GPXFile {
             val points = decode(polyline)
             val segment = Segment(points = points.toMutableList())
             val track = Track(name = name, segments = mutableListOf(segment))

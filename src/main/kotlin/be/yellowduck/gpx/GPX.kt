@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 import org.w3c.dom.Node
 import org.xml.sax.InputSource

@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable

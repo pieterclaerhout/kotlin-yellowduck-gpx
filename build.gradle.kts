@@ -24,5 +24,5 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-group = "be.yellowduck.sports"
-version = "1.0-SNAPSHOT"
+group = "be.yellowduck"
+version = "1.0"

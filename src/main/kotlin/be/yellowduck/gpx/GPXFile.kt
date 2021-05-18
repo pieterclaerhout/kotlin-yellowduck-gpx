@@ -1,4 +1,4 @@
-package be.yellowduck.sports.gpx
+package be.yellowduck.gpx
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter
 import java.io.ByteArrayOutputStream
