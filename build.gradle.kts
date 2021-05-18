@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.0"
+    id("org.jetbrains.dokka") version "1.4.10.2"
     `maven-publish`
     `java-library`
 }
@@ -25,8 +26,12 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+java {
+    withJavadocJar()
+}
+
 group = "be.yellowduck"
-version = "1.0.2"
+version = "1.0.3"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
@@ -49,6 +54,12 @@ val sourcesJar by tasks.creating(Jar::class) {
     }
 }
 
+val dokkaJavadocJar by tasks.creating(Jar::class) {
+    dependsOn(tasks.dokkaJavadoc)
+    from(tasks.dokkaJavadoc.get().outputDirectory.get())
+    archiveClassifier.set("javadoc")
+}
+
 publishing {
     publications {
         register("gprRelease", MavenPublication::class) {
@@ -59,6 +70,7 @@ publishing {
             from(components["java"])
 
             artifact(sourcesJar)
+            artifact(dokkaJavadocJar)
 
             pom {
                 packaging = "jar"
