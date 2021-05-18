@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Runtastic: Life is short - live long, http://www.runtastic.com" xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+                                http://www.topografix.com/GPX/1/1/gpx.xsd" xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata>
+    <copyright author="www.runtastic.com">
+      <year>2015</year>
+      <license>http://www.runtastic.com</license>
+    </copyright>
+    <link href="http://www.runtastic.com">
+      <text>runtastic</text>
+      <type>text/html</type>
+    </link>
+    <author>
+      <name>Runtastic</name>
+      <email id="runtastic" domain="example.com" />
+      <link href="http://www.runtastic.com">
+        <text>runtastic</text>
+        <type>text/html</type>
+      </link>
+    </author>
+    <time>2015-12-13T18:35:18.000Z</time>
+    <name>Run</name>
+    <desc>Running in the forest</desc>
+    <keywords>run running forest sport sports</keywords>
+    <bounds minlat="49.3956527709960938" minlon="11.1253080368041992" maxlat="49.4017448425292969" maxlon="11.1280641555786133" />
+  </metadata>
+  <foo></foo>
+  <trk>
+    <name>Running</name>
+    <type>running</type>
+    <link href="http://www.runtastic.com/sport-sessions/1089639152">
+      <text>Visit this link to view this activity on runtastic.com</text>
+    </link>
+  </trk>
+</gpx>
