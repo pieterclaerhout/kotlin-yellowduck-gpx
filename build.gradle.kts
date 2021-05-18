@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.0"
-    id("org.jetbrains.dokka") version "1.4.10.2"
+    id("org.jetbrains.dokka") version "1.4.32"
     `maven-publish`
     `java-library`
 }
@@ -31,7 +31,7 @@ java {
 }
 
 group = "be.yellowduck"
-version = "1.0.3"
+version = "1.0.4"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
