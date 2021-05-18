@@ -7,5 +7,5 @@
  * in the user manual at https://docs.gradle.org/7.0.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = "kotlin-yellowduck-gpx"
-include("lib")
+rootProject.name = "gpx"
+//include("lib")
