@@ -26,4 +26,65 @@ tasks.withType<KotlinCompile> {
 }
 
 group = "be.yellowduck"
-version = "1.0.1"
+version = "1.0.2"
+
+val myArtifactId: String = rootProject.name
+val myArtifactGroup: String = project.group.toString()
+val myArtifactVersion: String = project.version.toString()
+
+val myGithubUsername = "pieterclaerhout"
+val myGithubDescription = "A GPX library written in Kotlin"
+val myGithubHttpUrl = "https://github.com/${myGithubUsername}/kotlin-yellowduck-gpx"
+val myGithubIssueTrackerUrl = "https://github.com/${myGithubUsername}/kotlin-yellowduck-gpx/issues"
+val myLicense = "MIT"
+val myLicenseUrl = "https://raw.githubusercontent.com/pieterclaerhout/kotlin-yellowduck-gpx/main/LICENSE"
+
+val myDeveloperName = "Pieter Claerhout"
+
+val sourcesJar by tasks.creating(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.getByName("main").allSource)
+    from("LICENCE.md") {
+        into("META-INF")
+    }
+}
+
+publishing {
+    publications {
+        register("gprRelease", MavenPublication::class) {
+            groupId = myArtifactGroup
+            artifactId = myArtifactId
+            version = myArtifactVersion
+
+            from(components["java"])
+
+            artifact(sourcesJar)
+
+            pom {
+                packaging = "jar"
+                name.set(myArtifactId)
+                description.set(myGithubDescription)
+                url.set(myGithubHttpUrl)
+                scm {
+                    url.set(myGithubHttpUrl)
+                }
+                issueManagement {
+                    url.set(myGithubIssueTrackerUrl)
+                }
+                licenses {
+                    license {
+                        name.set(myLicense)
+                        url.set(myLicenseUrl)
+                    }
+                }
+                developers {
+                    developer {
+                        id.set(myGithubUsername)
+                        name.set(myDeveloperName)
+                    }
+                }
+            }
+
+        }
+    }
+}
