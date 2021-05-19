@@ -76,7 +76,7 @@ publishing {
 
             from(components["java"])
 
-//            artifact(sourcesJar)
+            artifact(sourcesJar)
             artifact(dokkaJavadocJar)
 
             pom {

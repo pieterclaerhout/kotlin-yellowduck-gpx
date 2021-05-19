@@ -1,6 +1,8 @@
 # GPX
 
 [![Release](https://jitpack.io/v/pieterclaerhout/kotlin-yellowduck-gpx.svg)](https://jitpack.io/#pieterclaerhout/kotlin-yellowduck-gpx)
+[![Documentation](https://img.shields.io/badge/docs-jitpack-blue)](https://jitpack.io/com/github/pieterclaerhout/kotlin-yellowduck-gpx/latest/javadoc/)
+[![License](https://img.shields.io/github/license/pieterclaerhout/kotlin-yellowduck-gpx)](https://raw.githubusercontent.com/pieterclaerhout/kotlin-yellowduck-gpx/main/LICENSE)
 
 A Kotlin library which can parse and generate GPX files.
 
