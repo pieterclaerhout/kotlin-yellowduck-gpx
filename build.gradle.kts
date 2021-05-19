@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     kotlin("jvm") version "1.5.0"
@@ -26,12 +27,9 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-java {
-    withJavadocJar()
-}
 
 group = "be.yellowduck"
-version = "1.0.4"
+version = "1.0.5"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
@@ -49,8 +47,17 @@ val myDeveloperName = "Pieter Claerhout"
 val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets.getByName("main").allSource)
-    from("LICENCE.md") {
+    from("LICENCE") {
         into("META-INF")
+    }
+}
+
+tasks {
+    dokkaHtml {
+        dokkaSourceSets.configureEach {
+            includeNonPublic.set(false)
+            skipEmptyPackages.set(true)
+        }
     }
 }
 
@@ -69,7 +76,7 @@ publishing {
 
             from(components["java"])
 
-            artifact(sourcesJar)
+//            artifact(sourcesJar)
             artifact(dokkaJavadocJar)
 
             pom {

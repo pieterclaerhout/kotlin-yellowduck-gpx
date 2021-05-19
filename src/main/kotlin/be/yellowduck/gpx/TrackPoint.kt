@@ -5,6 +5,15 @@ import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import kotlin.math.*
 
+/**
+ * TrackPoint defines a single waypoint.
+ *
+ * @param lat The latitude of the waypoint
+ * @param lon The longitude of the waypoint
+ * @param ele The elevation of the waypoint in meters
+ * @param time The time associated with the waypoint
+ * @constructor Creates a new trackpoint
+ */
 data class TrackPoint(
     var lat: Double = 0.0,
     var lon: Double = 0.0,
@@ -12,12 +21,14 @@ data class TrackPoint(
     var time: LocalDateTime? = null,
 ) {
 
-    companion object {
-        const val earthRadius: Double = 6371000.0
-    }
-
-    fun distanceTo(other: TrackPoint): Double {
-        return haversine(lat, lon, other.lat, other.lon)
+    /**
+     * distanceTo calculates the distance between this point and another point
+     *
+     * @param other The waypoint to calculate the distance to
+     *
+     */
+    fun distanceTo(other: TrackPoint): Distance {
+        return Distance(haversine(lat, lon, other.lat, other.lon))
     }
 
     private fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
@@ -35,6 +46,7 @@ data class TrackPoint(
 
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
+        val earthRadius = 6371000.0
         return earthRadius * c
 
     }
