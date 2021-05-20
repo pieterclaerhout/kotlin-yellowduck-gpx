@@ -2,6 +2,8 @@ package be.yellowduck.gpx
 
 import java.text.DecimalFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import kotlinx.serialization.Serializable
 
 /**
  * Distance is a class that can express a distance between two points.
@@ -15,7 +17,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore
  *
  * @since v1.0.0
  */
-class Distance(
+@Serializable(with = DistanceSerializer::class)
+@JsonSerialize(using = DistanceSerializer::class)
+data class Distance(
     private var _meters: Double = 0.0
 ) {
 
