@@ -10,11 +10,15 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.3")
     implementation("org.glassfish.jaxb:txw2:2.2.11")
     testImplementation("org.assertj:assertj-core:3.18.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
@@ -33,7 +37,7 @@ tasks.withType<Test> {
 }
 
 group = "be.yellowduck"
-version = "1.0.6"
+version = "1.0.7"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()

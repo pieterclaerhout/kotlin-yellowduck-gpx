@@ -1,6 +1,7 @@
 package be.yellowduck.gpx
 
 import java.text.DecimalFormat
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 /**
  * Distance is a class that can express a distance between two points.
@@ -31,21 +32,40 @@ class Distance(
     /**
      * Returns the distance in kilometers
      */
+    @JsonIgnore
     val kilometers: Double = meters / 1000.0
 
     /**
      * Return the distance in formatted kilometers
      */
+    @JsonIgnore
     val formattedKilometers: String = "${formatter.format(kilometers)} km"
 
     /**
      * Returns the distance in miles
      */
+    @JsonIgnore
     val miles: Double = meters / 1609.0
 
     /**
      * Return the distance in formatted miles
      */
+    @JsonIgnore
     val formattedMiles: String = "${formatter.format(miles)} mi"
+
+    override fun toString(): String {
+        return "${meters}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Distance) {
+            return false
+        }
+        return meters == other.meters
+    }
+
+    override fun hashCode(): Int {
+        return meters.hashCode()
+    }
 
 }
