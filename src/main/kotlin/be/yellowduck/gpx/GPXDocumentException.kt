@@ -5,5 +5,5 @@ package be.yellowduck.gpx
  *
  * @since v1.0.6
  */
-class NotAGPXDocumentException(message: String = "Not a GPX document") : Exception(message) {
+class GPXDocumentException(message: String = "Not a GPX document") : Exception(message) {
 }

@@ -4,9 +4,12 @@ import org.w3c.dom.Node
 import org.xml.sax.InputSource
 import java.io.FileInputStream
 import java.io.InputStream
+import java.net.URL
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.xml.parsers.DocumentBuilderFactory
+//import khttp.get
+import org.xml.sax.SAXParseException
 
 /**
  * This class can be used to parse an existing GPX file.
@@ -18,12 +21,28 @@ class GPX {
     companion object {
 
         /**
+         * Parse a GPS from a URL
+         *
+         * @param url The URL to parse the GPX from
+         * @return A parsed GPXFile instance
+         *
+         * @throws GPXDocumentException
+         */
+        fun parse(url: URL): GPXFile {
+            url.openStream().use {
+                return parse(it)
+            }
+//            val r = get(url.toString())
+//            return parse(r.text.byteInputStream())
+        }
+
+        /**
          * Parse a GPX from a file path
          *
          * @param path The path where the GPX file is located
          * @return A parsed GPXFile instance
          *
-         * @throws EmptyGPXDocumentException
+         * @throws GPXDocumentException
          */
         fun parse(path: String): GPXFile {
             val fis = FileInputStream(path)
@@ -36,7 +55,7 @@ class GPX {
          * @param inputStream The inputstream to parse
          * @return A parsed GPXFile instance
          *
-         * @throws EmptyGPXDocumentException
+         * @throws GPXDocumentException
          */
         fun parse(inputStream: InputStream): GPXFile {
 
@@ -50,12 +69,8 @@ class GPX {
                 val xmlInput = InputSource(inputStream)
                 val doc = dBuilder.parse(xmlInput)
 
-                if (!doc.hasChildNodes()) {
-                    throw EmptyGPXDocumentException()
-                }
-
                 if (doc.firstChild.nodeName != "gpx") {
-                    throw NotAGPXDocumentException()
+                    throw GPXDocumentException()
                 }
 
                 gpx.version = parseVersion(doc)
@@ -66,11 +81,10 @@ class GPX {
                     gpx.tracks.add(track)
                 }
 
+            } catch (e: SAXParseException) {
+                throw GPXDocumentException()
             } catch (e: Exception) {
-                if (e.message == "Premature end of file.") {
-                    throw EmptyGPXDocumentException()
-                }
-                throw e
+                throw GPXDocumentException()
             }
 
             return gpx
