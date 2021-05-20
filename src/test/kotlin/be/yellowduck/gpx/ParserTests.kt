@@ -40,7 +40,7 @@ class ParserTests {
 
     @Test
     fun testEmptyGPX() {
-        val exception = assertThrows<Exception> {
+        val exception = assertThrows<EmptyGPXDocumentException> {
             GPX.parse("src/test/resources/empty.gpx")
         }
         assertThat(exception.message).isEqualTo("Empty GPX document")
@@ -48,7 +48,7 @@ class ParserTests {
 
     @Test
     fun testNotAGPXFile() {
-        val exception = assertThrows<Exception> {
+        val exception = assertThrows<NotAGPXDocumentException> {
             GPX.parse("src/test/resources/no_gpx.gpx")
         }
         assertThat(exception.message).isEqualTo("Not a GPX document")

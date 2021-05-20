@@ -8,15 +8,36 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.xml.parsers.DocumentBuilderFactory
 
+/**
+ * This class can be used to parse an existing GPX file.
+ *
+ * @since v1.0.0
+ */
 class GPX {
 
     companion object {
 
+        /**
+         * Parse a GPX from a file path
+         *
+         * @param path The path where the GPX file is located
+         * @return A parsed GPXFile instance
+         *
+         * @throws EmptyGPXDocumentException
+         */
         fun parse(path: String): GPXFile {
             val fis = FileInputStream(path)
             return parse(fis)
         }
 
+        /**
+         * Parse a GPX from an input stream
+         *
+         * @param inputStream The inputstream to parse
+         * @return A parsed GPXFile instance
+         *
+         * @throws EmptyGPXDocumentException
+         */
         fun parse(inputStream: InputStream): GPXFile {
 
             val gpx = GPXFile()
@@ -30,11 +51,11 @@ class GPX {
                 val doc = dBuilder.parse(xmlInput)
 
                 if (!doc.hasChildNodes()) {
-                    throw Exception("Empty GPX document")
+                    throw EmptyGPXDocumentException()
                 }
 
                 if (doc.firstChild.nodeName != "gpx") {
-                    throw Exception("Not a GPX document")
+                    throw NotAGPXDocumentException()
                 }
 
                 gpx.version = parseVersion(doc)
@@ -47,7 +68,7 @@ class GPX {
 
             } catch (e: Exception) {
                 if (e.message == "Premature end of file.") {
-                    throw Exception("Empty GPX document")
+                    throw EmptyGPXDocumentException()
                 }
                 throw e
             }

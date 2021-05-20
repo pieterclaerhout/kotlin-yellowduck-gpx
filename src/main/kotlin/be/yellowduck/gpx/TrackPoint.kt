@@ -8,17 +8,20 @@ import kotlin.math.*
 /**
  * TrackPoint defines a single waypoint.
  *
- * @param lat The latitude of the waypoint
- * @param lon The longitude of the waypoint
- * @param ele The elevation of the waypoint in meters
- * @param time The time associated with the waypoint
- * @constructor Creates a new trackpoint
+ * @property lat The latitude of the waypoint
+ * @property lon The longitude of the waypoint
+ * @property ele The elevation of the waypoint in meters
+ * @property time The time associated with the waypoint
+ * @constructor Creates a new trackpoint given [lat], [lon], [ele] and [time]
+ *
+ * @since v1.0.0
  */
+@Serializable
 data class TrackPoint(
     var lat: Double = 0.0,
     var lon: Double = 0.0,
     var ele: Double = 0.0,
-    var time: LocalDateTime? = null,
+    @Contextual var time: LocalDateTime? = null,
 ) {
 
     /**

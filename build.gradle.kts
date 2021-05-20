@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     kotlin("jvm") version "1.5.0"
+    kotlin("plugin.serialization") version "1.5.0"
     id("org.jetbrains.dokka") version "1.4.32"
     `maven-publish`
     `java-library`
@@ -17,7 +17,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
     implementation("org.glassfish.jaxb:txw2:2.2.11")
     testImplementation("org.assertj:assertj-core:3.18.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -27,9 +28,12 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
 
 group = "be.yellowduck"
-version = "1.0.5"
+version = "1.0.6"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
@@ -62,7 +66,7 @@ tasks {
 }
 
 val dokkaJavadocJar by tasks.creating(Jar::class) {
-    dependsOn(tasks.dokkaJavadoc)
+    dependsOn(tasks.dokkaHtml)
     from(tasks.dokkaJavadoc.get().outputDirectory.get())
     archiveClassifier.set("javadoc")
 }

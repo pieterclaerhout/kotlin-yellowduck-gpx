@@ -30,3 +30,9 @@ dependencies {
 JitPack URL:
 
 https://jitpack.io/#pieterclaerhout/kotlin-yellowduck-gpx
+
+## Testing the documentation
+
+```
+./gradlew clean -Pgroup=com.github.pieterclaerhout -Pversion=v1.0.4 -xtest build publishToMavenLocal
+```

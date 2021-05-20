@@ -49,7 +49,7 @@ class TrackPointTests {
         var point2 = TrackPoint(lat = 13.5, lon = 45.5)
 
         val distance = point1.distanceTo(point2)
-        assertThat(distance).isEqualTo(243551.33090329584)
+        assertThat(distance.meters).isEqualTo(243551.33090329584)
 
     }
 
