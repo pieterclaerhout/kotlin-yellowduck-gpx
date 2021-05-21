@@ -84,7 +84,7 @@ class PolylineTests {
 </gpx>"""
 
         val expectedTCXOutput = """<?xml version="1.0" ?>
-<TrainingCenterDatabase xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns=="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<TrainingCenterDatabase xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Folders></Folders>
   <Courses>
     <Course>
@@ -93,21 +93,27 @@ class PolylineTests {
         <DistanceMeters>5950.802087285829</DistanceMeters>
       </Lap>
       <Track>
-        <Position>
-          <LatitudeDegrees>48.1969</LatitudeDegrees>
-          <LongitudeDegrees>16.34528</LongitudeDegrees>
-        </Position>
-        <DistanceMeters>0.0</DistanceMeters>
-        <Position>
-          <LatitudeDegrees>48.19732</LatitudeDegrees>
-          <LongitudeDegrees>16.34725</LongitudeDegrees>
-        </Position>
-        <DistanceMeters>153.3016609973685</DistanceMeters>
-        <Position>
-          <LatitudeDegrees>48.22858</LatitudeDegrees>
-          <LongitudeDegrees>16.40987</LongitudeDegrees>
-        </Position>
-        <DistanceMeters>5797.50042628846</DistanceMeters>
+        <Trackpoint>
+          <Position>
+            <LatitudeDegrees>48.1969</LatitudeDegrees>
+            <LongitudeDegrees>16.34528</LongitudeDegrees>
+          </Position>
+          <DistanceMeters>0.0</DistanceMeters>
+        </Trackpoint>
+        <Trackpoint>
+          <Position>
+            <LatitudeDegrees>48.19732</LatitudeDegrees>
+            <LongitudeDegrees>16.34725</LongitudeDegrees>
+          </Position>
+          <DistanceMeters>153.3016609973685</DistanceMeters>
+        </Trackpoint>
+        <Trackpoint>
+          <Position>
+            <LatitudeDegrees>48.22858</LatitudeDegrees>
+            <LongitudeDegrees>16.40987</LongitudeDegrees>
+          </Position>
+          <DistanceMeters>5797.50042628846</DistanceMeters>
+        </Trackpoint>
       </Track>
     </Course>
   </Courses>
