@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "be.yellowduck"
-version = "1.0.8"
+version = "1.0.9"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()

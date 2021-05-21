@@ -1,10 +1,5 @@
 package be.yellowduck.gpx
 
-import com.sun.xml.txw2.output.IndentingXMLStreamWriter
-import java.io.ByteArrayOutputStream
-import java.io.OutputStream
-import javax.xml.stream.XMLOutputFactory
-
 /**
  * This class is an abstraction of a GPX file
  *
@@ -19,7 +14,11 @@ data class GPXFile(
     var name: String = "",
     var version: String = "1.1",
     var creator: String = "sports.yellowduck.be",
-    var tracks: MutableList<Track> = mutableListOf()
+    var tracks: MutableList<Track> = mutableListOf(),
+    val writers: Map<String, IWriter> = mapOf(
+        "gpx" to GPXWriter(),
+        "tcx" to TCXWriter(),
+    )
 ) {
 
     /**
@@ -31,57 +30,20 @@ data class GPXFile(
         }
 
     /**
-     * This function allows you to output the GPX to an OutputStream as an XML-formatted file.
-     *
-     * @param stream The OutputStream to write to
+     * This can be used to write the data back to a GPX file
      */
-    fun toStream(stream: OutputStream) {
-
-        val writer = IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(stream, "UTF-8"))
-
-        writer.setIndentStep("  ")
-        writer.document {
-            element("gpx") {
-                if (!version.isNullOrBlank()) {
-                    attribute("version", version)
-                }
-                if (!creator.isNullOrBlank()) {
-                    attribute("creator", creator)
-                }
-                if (version == "1.0") {
-                    attribute("xmlns", "http://www.topografix.com/GPX/1/0")
-                }
-                if (version == "1.1") {
-                    attribute("xmlns", "http://www.topografix.com/GPX/1/1")
-                }
-                if (!name.isNullOrBlank()) {
-                    element("metadata") {
-                        element("name", name)
-                    }
-                }
-                tracks.forEach { track ->
-                    element("trk") {
-                        if (!track.name.isNullOrBlank()) {
-                            element("name", track.name)
-                        }
-                        track.segments.forEach { segment ->
-                            element("trkseg") {
-                                segment.points.forEach { point ->
-                                    element("trkpt") {
-                                        attribute("lat", point.lat.toString())
-                                        attribute("lon", point.lon.toString())
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    val asGPXString: String
+        get() {
+            return writers.get("gpx")!!.toString(this)
         }
 
-        writer.flush()
-
-    }
+    /**
+     * This can be used to write the data back to a TCX file
+     */
+    val asTCXString: String
+        get() {
+            return writers.get("tcx")!!.toString(this)
+        }
 
     /**
      * This function returns the GPX as an XML string
@@ -89,9 +51,7 @@ data class GPXFile(
      * @return The GPX as an XML string
      */
     override fun toString(): String {
-        var stream = ByteArrayOutputStream()
-        toStream(stream)
-        return stream.toString("UTF-8")
+        return asGPXString
     }
 
 }
