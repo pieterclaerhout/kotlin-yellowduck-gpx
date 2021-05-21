@@ -28,7 +28,7 @@ class TCXWriter : IWriter {
                 attribute("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
                 attribute("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
                 attribute("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
-                attribute("xmlns=", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2")
+                attribute("xmlns", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2")
                 attribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
                 element("Folders", "")
                 element("Courses") {
@@ -43,13 +43,15 @@ class TCXWriter : IWriter {
                             element("Track") {
                                 track.segments.forEach { segment ->
                                     segment.points.forEach { point ->
-                                        element("Position") {
-                                            element("LatitudeDegrees", point.lat.toString())
-                                            element("LongitudeDegrees", point.lon.toString())
+                                        element("Trackpoint") {
+                                            element("Position") {
+                                                element("LatitudeDegrees", point.lat.toString())
+                                                element("LongitudeDegrees", point.lon.toString())
+                                            }
+                                            val distance: Double = previousPoint?.distanceTo(point)?.meters ?: 0.0
+                                            element("DistanceMeters", distance.toString())
+                                            previousPoint = point
                                         }
-                                        val distance: Double = previousPoint?.distanceTo(point)?.meters ?: 0.0
-                                        element("DistanceMeters", distance.toString())
-                                        previousPoint = point
                                     }
                                 }
                             }
