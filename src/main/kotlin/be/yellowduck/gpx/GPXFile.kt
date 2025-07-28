@@ -34,7 +34,7 @@ data class GPXFile(
      */
     val asGPXString: String
         get() {
-            return writers.get("gpx")!!.toString(this)
+            return writers["gpx"]!!.toString(this)
         }
 
     /**
@@ -42,7 +42,7 @@ data class GPXFile(
      */
     val asTCXString: String
         get() {
-            return writers.get("tcx")!!.toString(this)
+            return writers["tcx"]!!.toString(this)
         }
 
     /**

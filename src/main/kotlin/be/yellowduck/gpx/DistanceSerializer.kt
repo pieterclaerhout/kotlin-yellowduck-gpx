@@ -13,7 +13,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.io.IOException
 
 
-class DistanceSerializer  @JvmOverloads constructor(t: Class<Distance>? = null) : KSerializer<Distance>, StdSerializer<Distance>(t) {
+class DistanceSerializer : KSerializer<Distance>, StdSerializer<Distance>(Distance::class.java) {
 
     @Throws(IOException::class, JsonProcessingException::class)
     override fun serialize(

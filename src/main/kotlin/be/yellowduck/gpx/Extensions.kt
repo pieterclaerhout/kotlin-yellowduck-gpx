@@ -5,7 +5,7 @@ import org.w3c.dom.NodeList
 import javax.xml.stream.XMLStreamWriter
 
 internal fun NodeList.items() : List<Node> {
-    var items = mutableListOf<Node>()
+    val items = mutableListOf<Node>()
     for (i in 0..this.length - 1) {
         items.add(item(i))
     }
@@ -33,7 +33,7 @@ internal fun Node.doubleAttribute(name: String) : Double {
 }
 
 internal fun Node.stringAttribute(name: String) : String {
-    return this.attributes.getNamedItem(name).nodeValue ?: ""
+    return this.attributes.getNamedItem(name)?.nodeValue ?: ""
 }
 
 internal fun XMLStreamWriter.document(init: XMLStreamWriter.() -> Unit): XMLStreamWriter {

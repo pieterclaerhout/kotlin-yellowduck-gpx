@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 group = "be.yellowduck"
 version = "1.0.10"
 
@@ -17,9 +15,9 @@ val myLicenseUrl = "https://raw.githubusercontent.com/pieterclaerhout/kotlin-yel
 val myDeveloperName = "Pieter Claerhout"
 
 plugins {
-    kotlin("jvm") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
-    id("org.jetbrains.dokka") version "1.4.32"
+    kotlin("jvm") version "2.1.21"
+    kotlin("plugin.serialization") version "1.9.25"
+    id("org.jetbrains.dokka") version "1.9.20"
     `maven-publish`
     `java-library`
 }
@@ -31,9 +29,9 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.12.3")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.19.2")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
     implementation("org.glassfish.jaxb:txw2:2.2.11")
 
     testImplementation("org.assertj:assertj-core:3.18.1")
@@ -42,12 +40,12 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
+
 
 tasks.withType<Test> {
     useJUnitPlatform()

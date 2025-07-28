@@ -1,5 +1,9 @@
 package be.yellowduck.gpx
 
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
+
 class Polyline {
 
     companion object {
@@ -29,7 +33,7 @@ class Polyline {
         }
 
         private fun encodeValue(value: Int): String {
-            var actualValue = if (value < 0) (value shl 1).inv() else (value shl 1)
+            val actualValue = if (value < 0) (value shl 1).inv() else (value shl 1)
             val chunks: List<Int> = splitIntoChunks(actualValue)
             return chunks.map { (it + 63).toChar() }.joinToString("")
         }
@@ -74,7 +78,7 @@ class Polyline {
 
             coordinateChunks.removeAt(coordinateChunks.lastIndex)
 
-            var coordinates: MutableList<Double> = mutableListOf()
+            val coordinates: MutableList<Double> = mutableListOf()
 
             for (coordinateChunk in coordinateChunks) {
                 var coordinate = coordinateChunk.mapIndexed { i, chunk -> chunk shl (i * 5) }.reduce { i, j -> i or j }
@@ -113,16 +117,16 @@ class Polyline {
         }
 
         private fun round(value: Double, precision: Int) =
-            (value * Math.pow(10.0, precision.toDouble())).toInt().toDouble() / Math.pow(10.0, precision.toDouble())
+            (value * 10.0.pow(precision.toDouble())).toInt().toDouble() / 10.0.pow(precision.toDouble())
 
         fun simplify(points: List<TrackPoint>, epsilon: Double): List<TrackPoint> {
 
             var dmax = 0.0
             var index = 0
-            var end = points.size
+            val end = points.size
 
             for (i in 1..(end - 2)) {
-                var d = perpendicularDistance(points[i], points[0], points[end - 1])
+                val d = perpendicularDistance(points[i], points[0], points[end - 1])
                 if (d > dmax) {
                     index = i
                     dmax = d
@@ -140,12 +144,9 @@ class Polyline {
         }
 
         private fun perpendicularDistance(pt: TrackPoint, lineFrom: TrackPoint, lineTo: TrackPoint): Double {
-            return Math.abs((lineTo.lon - lineFrom.lon) * (lineFrom.lat - pt.lat) - (lineFrom.lon - pt.lon) * (lineTo.lat - lineFrom.lat)) /
-                    Math.sqrt(
-                        Math.pow(
-                            lineTo.lon - lineFrom.lon,
-                            2.0
-                        ) + Math.pow(lineTo.lat - lineFrom.lat, 2.0)
+            return abs((lineTo.lon - lineFrom.lon) * (lineFrom.lat - pt.lat) - (lineFrom.lon - pt.lon) * (lineTo.lat - lineFrom.lat)) /
+                    sqrt(
+                        (lineTo.lon - lineFrom.lon).pow(2.0) + (lineTo.lat - lineFrom.lat).pow(2.0)
                     )
         }
 

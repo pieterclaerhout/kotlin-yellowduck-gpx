@@ -13,8 +13,14 @@ class TCXWriter : IWriter {
      * @param stream The OutputStream to write to
      */
     override fun toStream(gpxFile: GPXFile, stream: OutputStream) {
+        var factory: XMLOutputFactory
+        try {
+            factory = XMLOutputFactory.newFactory()
+        } catch (_: NoSuchMethodError) {
+            factory = XMLOutputFactory.newInstance()
+        }
 
-        val writer = IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(stream, "UTF-8"))
+        val writer = IndentingXMLStreamWriter(factory.createXMLStreamWriter(stream, "UTF-8"))
         writer.setIndentStep("  ")
 
         var previousPoint: TrackPoint? = null
@@ -34,7 +40,7 @@ class TCXWriter : IWriter {
                 element("Courses") {
                     gpxFile.tracks.forEach { track ->
                         element("Course") {
-                            if (!track.name.isNullOrBlank()) {
+                            if (track.name.isNotBlank()) {
                                 element("name", track.name)
                             }
                             element("Lap") {
@@ -48,6 +54,15 @@ class TCXWriter : IWriter {
                                                 element("LatitudeDegrees", point.lat.toString())
                                                 element("LongitudeDegrees", point.lon.toString())
                                             }
+
+                                            if (point.ele != 0.0) {
+                                                element("AltitudeMeters", point.ele.toString())
+                                            }
+
+                                            point.time?.let { time ->
+                                                element("Time", point.time.toString())
+                                            }
+
                                             val distance: Double = previousPoint?.distanceTo(point)?.meters ?: 0.0
                                             element("DistanceMeters", distance.toString())
                                             previousPoint = point
@@ -71,7 +86,7 @@ class TCXWriter : IWriter {
      * @return The GPX as a TCX XML string
      */
     override fun toString(gpxFile: GPXFile): String {
-        var stream = ByteArrayOutputStream()
+        val stream = ByteArrayOutputStream()
         toStream(gpxFile, stream)
         return stream.toString("UTF-8")
     }

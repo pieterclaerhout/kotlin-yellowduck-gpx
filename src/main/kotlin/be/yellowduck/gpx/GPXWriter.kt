@@ -3,6 +3,7 @@ package be.yellowduck.gpx
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
+import java.time.temporal.ChronoUnit
 import javax.xml.stream.XMLOutputFactory
 
 class GPXWriter : IWriter {
@@ -13,16 +14,22 @@ class GPXWriter : IWriter {
      * @param stream The OutputStream to write to
      */
     override fun toStream(gpxFile: GPXFile, stream: OutputStream) {
+        var factory: XMLOutputFactory
+        try {
+            factory = XMLOutputFactory.newFactory()
+        } catch (_: NoSuchMethodError) {
+            factory = XMLOutputFactory.newInstance()
+        }
 
-        val writer = IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(stream, "UTF-8"))
+        val writer = IndentingXMLStreamWriter(factory.createXMLStreamWriter(stream, "UTF-8"))
 
         writer.setIndentStep("  ")
         writer.document {
             element("gpx") {
-                if (!gpxFile.version.isNullOrBlank()) {
+                if (gpxFile.version.isNotBlank()) {
                     attribute("version", gpxFile.version)
                 }
-                if (!gpxFile.creator.isNullOrBlank()) {
+                if (gpxFile.creator.isNotBlank()) {
                     attribute("creator", gpxFile.creator)
                 }
                 if (gpxFile.version == "1.0") {
@@ -31,14 +38,14 @@ class GPXWriter : IWriter {
                 if (gpxFile.version == "1.1") {
                     attribute("xmlns", "http://www.topografix.com/GPX/1/1")
                 }
-                if (!gpxFile.name.isNullOrBlank()) {
+                if (gpxFile.name.isNotBlank()) {
                     element("metadata") {
                         element("name", gpxFile.name)
                     }
                 }
                 gpxFile.tracks.forEach { track ->
                     element("trk") {
-                        if (!track.name.isNullOrBlank()) {
+                        if (track.name.isNotBlank()) {
                             element("name", track.name)
                         }
                         track.segments.forEach { segment ->
@@ -47,6 +54,14 @@ class GPXWriter : IWriter {
                                     element("trkpt") {
                                         attribute("lat", point.lat.toString())
                                         attribute("lon", point.lon.toString())
+
+                                        if (point.ele != 0.0) {
+                                            element("ele", point.ele.toString())
+                                        }
+
+                                        point.time?.let { time ->
+                                            element("time", time.truncatedTo(ChronoUnit.SECONDS).toString())
+                                        }
                                     }
                                 }
                             }
@@ -66,7 +81,7 @@ class GPXWriter : IWriter {
      * @return The GPX as a GPX XML string
      */
     override fun toString(gpxFile: GPXFile): String {
-        var stream = ByteArrayOutputStream()
+        val stream = ByteArrayOutputStream()
         toStream(gpxFile, stream)
         return stream.toString("UTF-8")
     }

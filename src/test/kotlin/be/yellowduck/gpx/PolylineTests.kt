@@ -58,7 +58,7 @@ class PolylineTests {
         val decoded = Polyline.decode(polyline)
         assertThat(decoded.size).isEqualTo(460)
         assertThat(decoded.first()).isEqualTo(TrackPoint(lon = 16.34528, lat = 48.1969))
-        assertThat(decoded.get(10)).isEqualTo(TrackPoint(lon = 16.34725, lat = 48.19732))
+        assertThat(decoded[10]).isEqualTo(TrackPoint(lon = 16.34725, lat = 48.19732))
         assertThat(decoded.last()).isEqualTo(TrackPoint(lon = 16.40988, lat = 48.22858))
 
     }
